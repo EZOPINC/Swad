@@ -328,3 +328,17 @@ body {
     font-size: 2rem;
   }
 }
+
+/*Feedback section*/
+#feedback-stars .star {
+        font-size: 40px;
+        color: #ccc;
+        cursor: pointer;
+        transition: color 0.3s;
+        padding: 0 10px;
+    }
+
+    #feedback-stars .star:hover,
+    #feedback-stars .star:hover ~ .star {
+        color: #ffcc00;
+    }

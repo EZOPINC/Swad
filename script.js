@@ -205,7 +205,7 @@ function isMobileDevice() {
 
 // WhatsApp integration
 function openWhatsApp(message = '') {
-    const phoneNumber = '1234567890'; // Replace with actual WhatsApp business number
+    const phoneNumber = '13069147817'; // Replace with actual WhatsApp business number
     const defaultMessage = message || 'Hi! I\'m interested in ordering from Swad Kitchen.';
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(defaultMessage)}`;
     window.open(url, '_blank');
@@ -328,3 +328,51 @@ function measurePagePerformance() {
 
 // Initialize performance monitoring
 measurePagePerformance();
+
+//Feedback
+const stars = document.querySelectorAll('#feedback-stars .star');
+    const commentBox = document.getElementById('comment');
+    const emailBox = document.getElementById('email');
+    const submitBtn = document.getElementById('submit-feedback');
+    const thanksMsg = document.getElementById('thanks');
+
+    let selectedRating = null;
+
+    // Replace with your actual Google Form base URL and entry field IDs
+    const formBaseURL = 'https://docs.google.com/forms/d/e/1FAIpQLSfD-JjGzxAaCUc0ihso5GRFZhuocRrQ46w6YuJ_HAP6cLfkPQ/viewform?usp=pp_url';
+    const ratingFieldId = 'entry.821413723';   // Rating field
+    const commentFieldId = 'entry.905103995';  // Comment field
+    const emailFieldId = 'entry.1181120439';    // Email field
+
+    stars.forEach(star => {
+        star.addEventListener('click', function () {
+            selectedRating = this.getAttribute('data-rating');
+
+            //stars.forEach(s => s.classList.remove('clicked'));
+            for (let i = 0; i < selectedRating; i++) {
+                stars[i].classList.add('clicked');
+            }
+        });
+    });
+
+    submitBtn.addEventListener('click', () => {
+        if (!selectedRating) {
+            alert("Please select a rating before submitting.");
+            return;
+        }
+
+        const rating = encodeURIComponent(selectedRating);
+        const comment = encodeURIComponent(commentBox.value.trim());
+        const email = encodeURIComponent(emailBox.value.trim());
+
+        const finalURL = `${formBaseURL}&${ratingFieldId}=${rating}&${commentFieldId}=${comment}&${emailFieldId}=${email}`;
+
+        window.open(finalURL, '_blank');
+        thanksMsg.style.display = 'block';
+
+        // Reset form
+        commentBox.value = '';
+        emailBox.value = '';
+        stars.forEach(s => s.classList.remove('clicked'));
+        selectedRating = null;
+    });
